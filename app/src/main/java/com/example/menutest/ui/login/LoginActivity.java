@@ -17,6 +17,7 @@ import com.example.menutest.ui.venues.VenuesActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private long backPressTime = 0;
     private ActivityLoginBinding activityLoginBinding;
     private LoginViewModel loginViewModel;
 
@@ -67,5 +68,18 @@ public class LoginActivity extends AppCompatActivity {
                         activityLoginBinding.password.getText().toString(), this);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressTime + 2000 > System.currentTimeMillis()) {
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory(Intent.CATEGORY_HOME);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        } else {
+            Toast.makeText(this, "Press again to exit app", Toast.LENGTH_LONG).show();
+        }
+        backPressTime = System.currentTimeMillis();
     }
 }

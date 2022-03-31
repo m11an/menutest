@@ -1,5 +1,8 @@
 package com.example.menutest.ui.venue;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.menutest.R;
 import com.example.menutest.databinding.ActivityVenueBinding;
 import com.example.menutest.model.Venue;
+import com.example.menutest.ui.login.LoginActivity;
 import com.squareup.picasso.Picasso;
 
 public class VenueActivity extends AppCompatActivity {
@@ -18,6 +22,16 @@ public class VenueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityVenueBinding activityVenueBinding = ActivityVenueBinding.inflate(getLayoutInflater());
         setContentView(activityVenueBinding.getRoot());
+        setSupportActionBar(activityVenueBinding.toolbar.getRoot());
+        activityVenueBinding.toolbar.buttonLogout.setOnClickListener(v -> {
+            SharedPreferences sharedPreferences = this.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+            if (sharedPreferences.contains("token")) {
+                sharedPreferences.edit().clear().apply();
+            }
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        });
         Bundle data = getIntent().getExtras();
         Venue venue = data.getParcelable("venue");
         if(venue != null) {
@@ -30,7 +44,7 @@ public class VenueActivity extends AppCompatActivity {
             } else {
                 activityVenueBinding.venueImage.setVisibility(View.GONE);
                 activityVenueBinding.guideline8.setVisibility(View.GONE);
-                activityVenueBinding.guideline8.setGuidelinePercent(0);
+                activityVenueBinding.guideline8.setGuidelinePercent(0.1f);
                 activityVenueBinding.noImage.setVisibility(View.VISIBLE);
             }
             if(venue.getName() != null && !venue.getName().isEmpty())
