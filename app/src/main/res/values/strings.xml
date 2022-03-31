@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login_text">Login</string>
+    <string name="password_hint">Enter password</string>
+    <string name="email_hint">Enter email</string>
+    <string name="img_desc">image</string>
+    <string name="no_image_for_this_venue">No image for this venue</string>
+    <string name="no_venues">No Venues</string>
+    <string name="logout_title">Logout</string>
+    <string name="something_wrong">Something went wrong</string>
+</resources>
